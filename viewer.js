@@ -39,7 +39,7 @@ function loadshell()
 		window.location = "/s/"
 	}			
 	break;
-	case "admin_scripts"
+	case "admin_scripts":
 		document.write("<html><body><br><span style='color:#FF0000'><b>Whoops! This directory is not published on the web.</b></span></body></html>");
 		break;
 	case "app":
