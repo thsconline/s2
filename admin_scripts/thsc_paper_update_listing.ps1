@@ -35,7 +35,7 @@ Add-Type -Path .\System.Runtime.CompilerServices.Unsafe.dll -ErrorAction 'Silent
 $DrivePath = $Params.DrivePath  
 
 $PapersFile = $Params.PapersFile # use relative path
-$PapersFileLeaf = "$(Split-Path -Path $PapersFile -Leaf)"
+	
 $IndexFile = "$(Split-Path -Path $PapersFile -Parent)\index.html"
 
 $WithSolutionsSuffix  = $Params.WithSolutionsSuffix
@@ -51,7 +51,7 @@ $Schools = (gci $DrivePath -Directory | sort name).name
 $Papers = $Schools | % {(gci "$($DrivePath)\$($_)" | where {$_.name -match "[A-z ]{3,} (19|20)[0-9]{2} ($WithoutSolutionsSuffix|$WithSolutionsSuffix)"} | sort name).name}
 
 $PapersFormatted = ($Papers -replace $WithSolutionsSuffix, "w. sol" -replace $WithoutSolutionsSuffix, "").trim()
-
+$PapersFileLeaf = "$(Split-Path -Path $PapersFile -Leaf)"
 
 # Now to update the papers file with the new list content. We only index those that are the exact correct format.
 
@@ -82,6 +82,15 @@ $Schools | % {
 	{
 	$PapersetA = "<tr><td>$($SchoolName)<br />`r`n<span class=`"content`">`r`n";
 	$PapersetB = ($Paperset -replace "^(.*)", '<a>$1</a>' -replace "<a>", "<a href=`"#v`" onClick=`"pdf(this, $PDFTemplateCode)`">") -join "<br />" -replace "<br />", "<br />`r`n";
+	# Override for English 
+	switch($PDFTemplateCode)
+	{
+		"2718" {$PapersetB = ($Paperset -replace "^(.*)", '<a>$1 P1</a>' -replace "<a>", "<a href=`"#v`" onClick=`"pdf(this, $PDFTemplateCode)`">") -join "<br />" -replace "<br />", "<br />`r`n"; break;}
+		"2727" {$PapersetB = ($Paperset -replace "^(.*)", '<a>$1 P2 (Std.)</a>' -replace "<a>", "<a href=`"#v`" onClick=`"pdf(this, $PDFTemplateCode)`">") -join "<br />" -replace "<br />", "<br />`r`n"; break;}
+		"2728" {$PapersetB = ($Paperset -replace "^(.*)", '<a>$1 P2 (Adv.)</a>' -replace "<a>", "<a href=`"#v`" onClick=`"pdf(this, $PDFTemplateCode)`">") -join "<br />" -replace "<br />", "<br />`r`n"; break;}		
+		default {break;}
+		
+	}
 	$PapersetC = "`r`n</span></td></tr>`r`n"
 	
 	$PapersetHTMLCode = $PapersetA + $PapersetB + $PapersetC
@@ -106,16 +115,62 @@ Set-Content -Encoding UTF8 $PapersFile -Value $NewHTMLBlob
 if($Params.UpdateIndex)
 {
 	$UpdatedPapersHTMLBlob = gc -Encoding UTF8 $PapersFile
-	$TotalCount = ($UpdatedPapersHTMLBlob | select-string "pdf").count
-	$WSOLCount = ($UpdatedPapersHTMLBlob | select-string " w. sol").count
+
+		$IndexHTMLBlob = gc -Encoding UTF8 $IndexFile
+		$IndexHTMLParser = New-Object AngleSharp.Html.Parser.HtmlParser
+		$IndexHTMLSitePage = $IndexHTMLParser.ParseDocument($IndexHTMLBlob)
+		
+		$CurrentCount = ($IndexHtmlsitepage.getElementById("content-all").getElementsByTagName("a") | where {$_.pathname -eq "/$($PapersFileLeaf)"}).NextElementSibling.NextElementSibling.TextContent 
+
 	
-	$IndexHTMLBlob = gc -Encoding UTF8 $IndexFile
-	$IndexHTMLParser = New-Object AngleSharp.Html.Parser.HtmlParser
-	$IndexHTMLSitePage = $IndexHTMLParser.ParseDocument($IndexHTMLBlob)
-	$CurrentCount = ($IndexHtmlsitepage.getElementById("content-all").getElementsByTagName("a") | where {$_.pathname -eq "/$($PapersFileLeaf)"}).NextElementSibling.NextElementSibling.OuterHtml
-	$NewCount = "<span style=`"padding-left: 29px;`">$($TotalCount) papers online, $($WSOLCount) w. sol</span>"
+	#Override for English
+	switch($PDFTemplateCode)
+	{
+		"2718" {
+		$TotalCount = ($UpdatedPapersHTMLBlob | select-string "20(19|2[0-9]) P1<").count
+		
+		$CurrentCountE = $CurrentCount.split("\+")[0].trim();
+		$NewCount = "$($TotalCount) papers online"
+		$NewIndexHTMLBlob = $IndexHTMLBlob -replace $CurrentCountE,$NewCount
+		Set-Content -Encoding UTF8 $IndexFile -Value $NewIndexHTMLBlob 
+		break;
+		}
+		"2727" {
+		$TotalCount = ($UpdatedPapersHTMLBlob | select-string "P2 \(Std.\)<").count
+		
+		$CurrentCountE = $CurrentCount.split("\+")[0].trim();
+		$NewCount = "$($TotalCount) papers online"
+		$NewIndexHTMLBlob = $IndexHTMLBlob -replace $CurrentCountE,$NewCount
+		Set-Content -Encoding UTF8 $IndexFile -Value $NewIndexHTMLBlob 
+		break;
+		}
+		"2728" {
+		$TotalCount = ($UpdatedPapersHTMLBlob | select-string "P2 \(Adv.\)<").count
+		
+		$CurrentCountE = $CurrentCount.split("\+")[0].trim();
+		$NewCount = "$($TotalCount) papers online"
+		$NewIndexHTMLBlob = $IndexHTMLBlob -replace $CurrentCountE,$NewCount
+		Set-Content -Encoding UTF8 $IndexFile -Value $NewIndexHTMLBlob 
+		break;
+		}
+		default {
+		
+		$TotalCount = ($UpdatedPapersHTMLBlob | select-string "pdf").count
+		$WSOLCount = ($UpdatedPapersHTMLBlob | select-string " w. sol").count
+
+		$NewCount = "$($TotalCount) papers online, $($WSOLCount) w. sol"
+		
+		if($WSOLCount -eq 0)
+		{
+			$NewCount = "$($TotalCount) papers online"
+		}
+
+		$NewIndexHTMLBlob = $IndexHTMLBlob -replace $CurrentCount,$NewCount
 	
-	$NewIndexHTMLBlob = $IndexHTMLBlob -replace $CurrentCount,$NewCount
-	Set-Content -Encoding UTF8 $IndexFile -Value $NewIndexHTMLBlob 
+		Set-Content -Encoding UTF8 $IndexFile -Value $NewIndexHTMLBlob 		
+		break;
+		}
+	}
+
 }
 ## Run a sync in Github Desktop / Git client to update in production.
