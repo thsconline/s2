@@ -52,8 +52,6 @@ $Papers = $Schools | % {(gci "$($DrivePath)\$($_)" | where {$_.name -match "[A-z
 
 $PapersFormatted = ($Papers -replace $WithSolutionsSuffix, "w. sol" -replace $WithoutSolutionsSuffix, "").trim()
 
-$TotalCount = ($Papers | measure).count
-$WSOLCount = (($Papers | where {$_ -match $WithSolutionsSuffix}) | measure).count
 
 # Now to update the papers file with the new list content. We only index those that are the exact correct format.
 
@@ -115,6 +113,10 @@ Set-Content -Encoding UTF8 $PapersFile -Value $NewHTMLBlob
 ## Finally we update the 
 if($Params.UpdateIndex)
 {
+	$UpdatedPapersHTMLBlob = gc -Encoding UTF8 $PapersFile
+	$TotalCount = ($UpdatedPapersHTMLBlob | select-string "pdf").count
+	$WSOLCount = ($UpdatedPapersHTMLBlob | select-string " w. sol").count
+	
 	$IndexHTMLBlob = gc -Encoding UTF8 $IndexFile
 	$IndexHTMLParser = New-Object AngleSharp.Html.Parser.HtmlParser
 	$IndexHTMLSitePage = $IndexHTMLParser.ParseDocument($IndexHTMLBlob)
