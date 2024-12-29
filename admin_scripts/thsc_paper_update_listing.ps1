@@ -65,15 +65,7 @@ $TableRows = $TableBody.getElementsByTagName("tr");
 
 # Remove rows first 
 $TableRows | % {
-	if($_.classname -match "gskip") ## add gskip class to skip for admin scripts
-	{
-		# do nothing
-	}
-	else
-	{
 		$_.Remove() | Out-Null
-	}
-	
 }
 $Schools | % {
 	$SchoolName = $_;
