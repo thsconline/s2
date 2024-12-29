@@ -14,7 +14,7 @@ $ProgressPreference = "SilentlyContinue"
 
 try
 {
-	
+	$Params = (gc ".\config_files\$PDFTemplateCode.json" | ConvertFrom-Json)
 	
 }
 catch
