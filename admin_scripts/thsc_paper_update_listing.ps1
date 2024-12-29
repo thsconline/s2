@@ -1,6 +1,6 @@
 #### Powershell Script Copyright 2024-12-28 thsconline. Not covered under MIT license.
 Param (
-[Mandatory=$true]
+[Parameter(Mandatory=$true)]
 $PDFTemplateCode
 )
 
