@@ -85,6 +85,11 @@ $Schools | % {
 	
 	### Logic to add paragraph block
 	$PaperSet
+	if(($Paperset | Measure).count -eq 0)
+	{
+	}
+	else
+	{
 	$PapersetA = "<tr><td>$($SchoolName)<br />`r`n<span class=`"content`">`r`n";
 	$PapersetB = ($Paperset -replace "^(.*)", '<a>$1</a>' -replace "<a>", "<a href=`"#v`" onClick=`"pdf(this, $PDFTemplateCode)`">") -join "<br />" -replace "<br />", "<br />`r`n";
 	$PapersetC = "`r`n</span></td></tr>`r`n"
@@ -92,6 +97,7 @@ $Schools | % {
 	$PapersetHTMLCode = $PapersetA + $PapersetB + $PapersetC
 	
 	$TableBody.InnerHTML += $PapersetHTMLCode
+	}
 	
 }
 
