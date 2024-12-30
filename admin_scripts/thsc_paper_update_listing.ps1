@@ -4,6 +4,20 @@ Param (
 $PDFTemplateCode
 )
 
+if($PDFTemplateCode -eq "AllAvailable")
+{
+	$host.ui.RawUI.WindowTitle = "thsconline admin script $PDFTemplateCode"
+	chdir $PSScriptRoot # change to current directory
+	$ErrorActionPreference = "Stop"
+	$ProgressPreference = "SilentlyContinue"
+
+	$Templates = (gci ".\config_files\*.json").name -replace ".json",""
+	$Templates | % {
+	Write-Host -f Magenta "Running template $($_)"
+	.\thsc_paper_update_listing.ps1 -PDFTemplateCode "$($_)"
+	}
+}
+
 chdir $PSScriptRoot
 
 
