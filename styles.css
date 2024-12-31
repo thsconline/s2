@@ -390,6 +390,51 @@ td {
 	font-weight: normal !important;
 } 
 
+
+
+/* Container for search input and checkbox */
+.search {
+  padding: 5px;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Style the search input */
+#search-bar {
+  width: 100%;
+  font-size: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+#search-bar:focus {
+  border-color: #FF5500;
+  outline: none;
+}
+
+/* Style the checkbox and label */
+label {
+  display: inline-flex;
+  align-items: center;
+  font-size: 14px;
+  margin-top: 10px;
+  font-weight: normal !important;
+}
+
+input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+/* Styling for search message */
+#search-message {
+  font-size: 12px;
+  color: #FF5500; /* Success color */
+  margin-top: 5px;
+}
+
+
 @media screen and (max-width:1095px) {
 	.reducible {
 		display: none !important;
