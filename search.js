@@ -87,11 +87,8 @@ function filterTable() {
             var start = parseInt(parts[0]);
             var end = parseInt(parts[1]);
 
-            // If the second part (end) is a two-digit year, we allow this format (e.g., 2023-24)
-            if (parts[0].length === 4 && parts[1].length === 4) {
-                // If the second part is two digits (e.g., 2023-24), treat it as the full range (2023|2024)
-                 end = parseInt(parts[1]);  // Make it "2023|2024"
-            } else if (parts[0].length === 4 && parts[1].length === 2) {
+      
+            if (parts[0].length === 4 && parts[1].length === 2) {
                 // Handle case like "2022-24", convert it into "2022|2023|2024"
                 end = parseInt(parts[0].slice(0, 2) + parts[1]);  // Convert "2022-24" into 2022|2023|2024
             }
