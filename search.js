@@ -27,33 +27,6 @@ function toggleSearchBar() {
     searchRow.style.display = "table-row";  // Show the search bar
   } else {
     searchRow.style.display = "none";  // Hide the search bar
-	var table = document.querySelector("table.listing"); // Assuming the links are in a <table>
-    var rows = table.getElementsByTagName("tr");
-
-	  for (i = 0; i < rows.length; i++) {
-            if (rows[i].classList.contains("content")) {
-                rows[i].style.display = "";  // Show rows with class "content"
-            } else {
-                rows[i].style.display = "";  // Show all other rows
-            }
-
-            cells = rows[i].getElementsByTagName("td");
-            for (j = 0; j < cells.length; j++) {
-                links = cells[j].getElementsByTagName("a");
-                for (k = 0; k < links.length; k++) {
-                    links[k].style.display = "";  // Show each link
-                    br = links[k].nextElementSibling;
-                    if (br && br.tagName === "BR") {
-                        br.style.display = "";  // Show <br> if it follows a link
-                    }
-                }
-            }
-        }
-
-        // Clear the result message when search is empty
-        var resultMessage = document.getElementById("search-message");
-        resultMessage.innerHTML = "";
-	
   }
 }
 
