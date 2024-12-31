@@ -1,4 +1,3 @@
-
 function toggleSearchBar() {
   var searchRow = document.getElementById("search-row");
   if (searchRow.style.display === "none") {
@@ -56,7 +55,7 @@ function filterTable() {
     }
 
     // Strip all special characters except *, ?, |, and - (for wildcards and ranges)
-    filter = filter.replace(/[^A-Za-z0-9\*\?\|,.-]/g, '');  // Remove everything except letters, numbers, *, ?, |, commas, and dashes
+    filter = filter.replace(/[^A-Za-z0-9\*\?\|,.\-\s]/g, '');  // Remove everything except letters, numbers, *, ?, |, commas, and dashes
 
     // Remove | characters from the beginning and end of the filter string
     filter = filter.replace(/^(\|)+|(\|)+$/g, '');
