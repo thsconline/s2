@@ -272,3 +272,20 @@ function filterTable() {
         resultMessage.innerHTML = "No results found.";  // In case no results match
     }
 }
+
+function getUrlParameter(name) {
+    var url = window.location.search.substring(1);  // Get query string without the '?' character
+    var urlParams = new URLSearchParams(url);
+    return urlParams.get(name);  // Get value of the parameter 'name'
+}
+
+window.onload = function() {
+    // Check if the 'search' parameter exists in the URL
+    var searchQuery = getUrlParameter('search');
+    if (searchQuery) {
+        var searchInput = document.getElementById("search-bar");
+        searchInput.value = searchQuery;  // Set the input value to the search query from the URL
+
+        filterTable();  // Trigger the table filtering function
+    }
+}
