@@ -202,6 +202,11 @@ function filterTable() {
 	
     // Loop through all rows and apply the search filter
     for (i = 0; i < rows.length; i++) {
+		if (rows[i].classList.contains("search")) {
+			// no change
+			continue;
+		}
+		
         if (rows[i].classList.contains("content")) {
             rows[i].style.display = "none";  // Always hide rows with class "content"
             continue;
