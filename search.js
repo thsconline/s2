@@ -1,3 +1,26 @@
+
+   var dictionary = {
+	"Solutions": ["w. sol", "solutions"],       
+	"BHHS": ["Baulkham Hills", "BHHS"],	   
+	"FSHS": ["Fort St", "FSHS"],	   
+	"HAHS": ["Hurlstone", "HAHS"],	 
+	"JR": ["James Ruse", "JR"],	 
+	"NSB": ["North Sydney Boys", "NSB"],
+	"NSG": ["North Sydney Girls", "NSG"],
+	"SGGHS": ["St George Girls", "SGGHS"],
+	"SBHS": ["Sydney Boys", "SBHS"],
+	"SGS": ["Sydney Grammar", "SGS"],
+	"STHS": ["Sydney Tech", "STHS"],
+	   
+       
+        // Add more mappings as needed
+    };
+	
+	
+	
+	
+	
+
 function toggleSearchBar() {
   var searchRow = document.getElementById("search-row");
   if (searchRow.style.display === "none") {
@@ -38,12 +61,7 @@ function filterTable() {
     var input, filter, table, rows, cells, links, i, j, k, link, br, matchFound, resultCount, isExactMatch, debounceTimeout;
 
     // Predefined dictionary for keyword mapping (STHS -> ["Sydney Tech", "STHS"])
-    var dictionary = {
-        "STHS": ["Sydney Tech", "STHS"],
-        "NYC": ["New York City", "NYC"],
-        "LA": ["Los Angeles", "LA"]
-        // Add more mappings as needed
-    };
+ 
 
     input = document.getElementById("search-bar");
     filter = input.value.toUpperCase();  // Convert search term to uppercase
