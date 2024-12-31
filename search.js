@@ -151,7 +151,10 @@ function filterTable() {
     // If the search input is empty, show all rows and links and reset result message
     if (filter === "" || input.value === "") {
         for (i = 0; i < rows.length; i++) {
-            if (rows[i].classList.contains("content")) {
+            if (rows[i].classList.contains("search")) {
+				continue; // Ignore the searchbar
+			}
+			if (rows[i].classList.contains("content")) {
                 rows[i].style.display = "";  // Show rows with class "content"
             } else {
                 rows[i].style.display = "";  // Show all other rows
