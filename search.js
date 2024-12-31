@@ -191,11 +191,11 @@ function filterTable() {
     }, 3000);  // Wait 3 seconds before hiding the search bar
 	
 	return;  // Exit the function early since no filtering is needed
-  } else {
+  } /*else {
 	var searchRow = document.getElementById("search-row");
     searchRow.style.display = "table-row";  // Show the search bar if there is any input
 		
-    }
+    }*/
 
 	var showWithSolution = document.getElementById("search-wsol-only").checked;
 	
