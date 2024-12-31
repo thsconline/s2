@@ -228,7 +228,7 @@ function filterTable() {
                 if (regex.test(link.innerText.toUpperCase()) || matchNumericRange(link.innerText, filter)) {
 				
 					// Hide rows that don't have "w. sol"
-					if (showWithSolution && !rows[i].innerText.includes("w. sol")) {
+					if (showWithSolution && link.innerText.includes("w. sol")) {
 						link.style.display = "none";  // Hide non-matching link
 
 						if (br && br.tagName === "BR") {
