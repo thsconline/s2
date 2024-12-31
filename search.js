@@ -284,6 +284,7 @@ window.onload = function() {
     var searchQuery = getUrlParameter('search');
     if (searchQuery) {
         var searchInput = document.getElementById("search-bar");
+		if(searchQuery="new-syllabus"){searchQuery = "2019-24"}
         searchInput.value = searchQuery;  // Set the input value to the search query from the URL
 
         filterTable();  // Trigger the table filtering function
