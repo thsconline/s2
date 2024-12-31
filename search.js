@@ -285,9 +285,13 @@ window.onload = function() {
     var searchQuery = getUrlParameter('filter');
     if (searchQuery) {
         var searchInput = document.getElementById("search-bar");
+		
+		var exactMatchCheckbox = document.getElementById("search-exact");
+        
+        
 		if(searchQuery=="new-syllabus"){searchQuery = "2019-24"}
         searchInput.value = searchQuery;  // Set the input value to the search query from the URL
-
+		exactMatchCheckbox.checked = true;
         filterTable();  // Trigger the table filtering function
     }
 }
