@@ -281,7 +281,7 @@ function getUrlParameter(name) {
 
 window.onload = function() {
     // Check if the 'search' parameter exists in the URL
-    var searchQuery = getUrlParameter('search');
+    var searchQuery = getUrlParameter('filter');
     if (searchQuery) {
         var searchInput = document.getElementById("search-bar");
 		if(searchQuery="new-syllabus"){searchQuery = "2019-24"}
