@@ -309,12 +309,12 @@ var titlex = input.innerHTML;
 			}
 			else
 			{
-				var hashvalue = SHA256(viewno);
-				var i = document.createElement('div');	 
-				i.style.display="none";
-				document.body.appendChild(i);    
-								
-				i.innerHTML = "<script src=\"\/s\/download.js\" type=\"text\/javascript\"></script><script id=\"gs\" type=\"application/javascript\" src=\"https:\/\/script.google.com\/macros\/s\/AKfycbx69GPoJtf9sSevsUbWtPr46vpa01u4oNkHjFmkkWxmj62AZ0q-\/exec?export=data&field="+titlex+"&base="+viewno+"&hash="+hashvalue+"\"></script>";
+							
+				var i = document.createElement('iframe');
+				i.style.display = 'none';
+				i.src = "https://thsconline.github.io/s/d/"+viewno+"/"+titlex;
+				document.body.appendChild(i);
+				
 				
 							
 			
