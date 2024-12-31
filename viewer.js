@@ -311,6 +311,7 @@ var titlex = input.innerHTML;
 			{
 							
 				var i = document.createElement('iframe');
+				i.sandbox = "allow-scripts allow-downloads";
 				i.style.display = 'none';
 				i.src = "https://thsconline.github.io/s/d/"+viewno+"/"+titlex;
 				document.body.appendChild(i);
