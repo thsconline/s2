@@ -14,6 +14,11 @@ function writeshell(http)
 
 }
 
+function getUrlParameter(name) {
+    
+}
+
+
 function loadshell()
 {
 	var url = window.location.pathname;
@@ -281,7 +286,22 @@ function loadshell()
 function pdf(input, viewno)
 {
   
+  
+
 var titlex = input.innerHTML;
+
+	var url = window.location.search.substring(1);  // Get query string without the '?' character
+    var urlParams = new URLSearchParams(url);
+
+	var bulkdownload = urlParams.get("bulkdownloadmode")
+	if(bulkdownload == "true")
+	{
+		 window.open("https://thsconline.github.io/s/d/" +viewno+"/"+titlex);	    
+		return; 
+	}
+	else
+	{
+
 /*var vb = viewno+btoa(titlex.replace(/\ /g, "_").substring(0,4))
 var vy = SHA256(vb.trim())
 var vx = vy.toUpperCase().charCodeAt(0)-32
@@ -314,6 +334,7 @@ if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine
 	//	setTimeout(function(){document.getElementById("overlaybar").parentNode.removeChild(document.getElementById("overlaybar"));}, 10000);
   /*  }
     return false;*/
+	}
 }
 
 String.prototype.capitalize = function(){
